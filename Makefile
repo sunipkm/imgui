@@ -21,14 +21,18 @@ LIBS =
 ifeq ($(UNAME_S), Linux) #LINUX
 	ECHO_MESSAGE = "Linux"
 	LIBS += -lGL `pkg-config --static --libs glfw3`
-
+	LIBEXT= so
+	LINKOPTIONS:= -shared
 	CXXFLAGS += `pkg-config --cflags glfw3`
 	CFLAGS = $(CXXFLAGS)
 endif
 
 ifeq ($(UNAME_S), Darwin) #APPLE
 	ECHO_MESSAGE = "Mac OS X"
-	LIBS += -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+	LIBEXT= dylib
+	LINKOPTIONS:= -dynamiclib -single_module
+	CXXFLAGS:= -arch $(ARCH) $(CXXFLAGS)
+	LIBS += -arch $(ARCH) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
 	LIBS += -L/usr/local/lib -L/opt/local/lib
 	#LIBS += -lglfw3
 	LIBS += -lglfw
@@ -48,13 +52,14 @@ BUILDPLOT=src/implot.o \
 src/implot_items.o \
 src/implot_demo.o
 
-GUITARGET=libimgui_glfw.a
+GUITARGET=libimgui_glfw.$(LIBEXT)
 
 all: $(GUITARGET)
 
 
 $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
-	ar -crus $@ $(BUILDGUI) $(BUILDPLOT) 
+	$(CXX) $(LINKOPTIONS) -o $@ \
+	$(BUILDGUI) $(BUILDPLOT) $(LIBS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
