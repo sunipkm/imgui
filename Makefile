@@ -68,6 +68,13 @@ $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
+install:
+	cp $(GUITARGET) /usr/local/lib
+	cp -r include/* /usr/local/include
+
+uninstall:
+	$(RM) /usr/local/lib/$(GUITARGET)
+	
 .PHONY: clean
 
 clean:
