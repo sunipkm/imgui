@@ -54,7 +54,11 @@ src/implot_demo.o
 
 GUITARGET=libimgui_glfw.$(LIBEXT)
 
-all: $(GUITARGET)
+all: $(GUITARGET) test
+
+test: $(GUITARGET)
+	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) -L./ -limgui_glfw \
+	$(LIBS)
 
 
 $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
@@ -68,6 +72,7 @@ $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
 
 clean:
 	$(RM) $(GUITARGET)
+	$(RM) test.out
 
 spotless: clean
 	$(RM) $(BUILDGUI)
