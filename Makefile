@@ -52,28 +52,20 @@ BUILDPLOT=src/implot.o \
 src/implot_items.o \
 src/implot_demo.o
 
-GUITARGET=libimgui_glfw.$(LIBEXT)
+GUITARGET=libimgui_glfw.a
 
 all: $(GUITARGET) test
 
 test: $(GUITARGET)
-	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) -L./ -limgui_glfw \
+	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) $(GUITARGET) \
 	$(LIBS)
 
 
 $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
-	$(CXX) $(LINKOPTIONS) -o $@ \
-	$(BUILDGUI) $(BUILDPLOT) $(LIBS)
+	ar -crus $(GUITARGET) $(BUILDGUI) $(BUILDPLOT)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-install:
-	cp $(GUITARGET) /usr/local/lib
-	cp -r include/* /usr/local/include
-
-uninstall:
-	$(RM) /usr/local/lib/$(GUITARGET)
 	
 .PHONY: clean
 
