@@ -21,14 +21,18 @@ LIBS =
 ifeq ($(UNAME_S), Linux) #LINUX
 	ECHO_MESSAGE = "Linux"
 	LIBS += -lGL `pkg-config --static --libs glfw3`
-
+	LIBEXT= so
+	LINKOPTIONS:= -shared
 	CXXFLAGS += `pkg-config --cflags glfw3`
 	CFLAGS = $(CXXFLAGS)
 endif
 
 ifeq ($(UNAME_S), Darwin) #APPLE
 	ECHO_MESSAGE = "Mac OS X"
-	LIBS += -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+	LIBEXT= dylib
+	LINKOPTIONS:= -dynamiclib -single_module
+	CXXFLAGS:= -arch $(ARCH) $(CXXFLAGS)
+	LIBS += -arch $(ARCH) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
 	LIBS += -L/usr/local/lib -L/opt/local/lib
 	#LIBS += -lglfw3
 	LIBS += -lglfw
@@ -53,23 +57,16 @@ GUITARGET=libimgui_glfw.a
 all: $(GUITARGET) test
 
 test: $(GUITARGET)
-	$(CXX) $(CXXFLAGS) src/main.cpp -o test.out -L./ -limgui_glfw \
+	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) $(GUITARGET) \
 	$(LIBS)
 
 
 $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
-	ar -crus $@ $(BUILDGUI) $(BUILDPLOT) 
+	ar -crus $(GUITARGET) $(BUILDGUI) $(BUILDPLOT)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-install:
-	cp $(GUITARGET) /usr/local/lib
-	cp -r include/* /usr/local/include
-
-uninstall:
-	$(RM) /usr/local/lib/$(GUITARGET)
-
+	
 .PHONY: clean
 
 clean:
