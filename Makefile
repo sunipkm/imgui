@@ -15,7 +15,7 @@ endif
 
 UNAME_S := $(shell uname -s)
 
-CXXFLAGS:= -I include/imgui -I include/implot -I include/backend -I ./ -Wall -O2 -fpermissive -std=gnu++11
+CXXFLAGS:= -I include/ -I ./ -Wall -O2 -fpermissive -std=gnu++11
 LIBS = 
 
 ifeq ($(UNAME_S), Linux) #LINUX

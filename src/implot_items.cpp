@@ -22,8 +22,8 @@
 
 // ImPlot v0.9 WIP
 
-#include "implot.h"
-#include "implot_internal.h"
+#include "implot/implot.h"
+#include "implot/implot_internal.h"
 
 #ifdef _MSC_VER
 #define sprintf sprintf_s

@@ -65,8 +65,8 @@ You can read releases logs https://github.com/epezent/implot/releases for more d
 
 */
 
-#include "implot.h"
-#include "implot_internal.h"
+#include "implot/implot.h"
+#include "implot/implot_internal.h"
 
 #ifdef _MSC_VER
 #define sprintf sprintf_s
