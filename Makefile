@@ -46,13 +46,19 @@ src/imgui_impl_opengl2.o \
 src/imgui.o \
 src/imgui_demo.o \
 src/imgui_draw.o \
-src/imgui_widgets.o \
+src/imgui_widgets.o
 
-BUILDPLOT=src/implot.o \
+IMPLOTOBJ=src/implot.o \
 src/implot_items.o \
 src/implot_demo.o
 
+BUILDPLOT=
+
 GUITARGET=libimgui_glfw.a
+
+ifdef implot
+BUILDPLOT=$(IMPLOTOBJ)
+endif
 
 all: $(GUITARGET) test
 
@@ -75,5 +81,5 @@ clean:
 
 spotless: clean
 	$(RM) $(BUILDGUI)
-	$(RM) $(BUILDPLOT)
+	$(RM) $(IMPLOTOBJ)
 
