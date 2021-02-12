@@ -15,3 +15,9 @@ To use implot in your program, you need to compile the library with the `implot=
 
     Linux: ``-lGL `pkg-config --static --libs glfw3` ``
 
+### WSL OpenGL3 support and issues
+To use OpenGL3 with VcXsrV and WSL, perform the following steps:
+1. Disable `LIBGL_ALWAYS_INDIRECT` by editing `/etc/wsl-integration.sh`.
+2. Do not use `-wgl` command line argument (or Native opengl option in GUI) in VcXsrV.
+With these settings, the program runs on WSL.
+
