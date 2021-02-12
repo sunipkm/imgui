@@ -22,7 +22,7 @@
 
 // ImPlot v0.9 WIP
 
-#include "implot.h"
+#include "implot/implot.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -1482,7 +1482,7 @@ void StyleSeaborn() {
 // into the public API and expose the necessary building blocks to fully support
 // custom plotters. For now, proceed at your own risk!
 
-#include "implot_internal.h"
+#include "implot/implot_internal.h"
 
 namespace MyImPlot {
 

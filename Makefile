@@ -15,7 +15,8 @@ endif
 
 UNAME_S := $(shell uname -s)
 
-CXXFLAGS:= -I include/imgui -I include/implot -I include/backend -I ./ -Wall -O2 -fpermissive -std=gnu++11
+EDCFLAGS+= -I include/ -I ./ -Wall -O2 -std=gnu11 -I libs/gl3w -DIMGUI_IMPL_OPENGL_LOADER_GL3W
+CXXFLAGS:= -I include/ -I ./ -Wall -O2 -fpermissive -std=gnu++11 -I libs/gl3w -DIMGUI_IMPL_OPENGL_LOADER_GL3W
 LIBS = 
 
 ifeq ($(UNAME_S), Linux) #LINUX
@@ -42,22 +43,34 @@ ifeq ($(UNAME_S), Darwin) #APPLE
 endif
 
 BUILDGUI=src/imgui_impl_glfw.o \
+src/imgui_impl_opengl3.o \
 src/imgui_impl_opengl2.o \
+libs/gl3w/GL/gl3w.o \
 src/imgui.o \
 src/imgui_demo.o \
 src/imgui_draw.o \
-src/imgui_widgets.o \
+src/imgui_widgets.o
 
-BUILDPLOT=src/implot.o \
+IMPLOTOBJ=src/implot.o \
 src/implot_items.o \
 src/implot_demo.o
 
+BUILDPLOT=
+
 GUITARGET=libimgui_glfw.a
 
-all: $(GUITARGET) test
+ifdef implot
+BUILDPLOT=$(IMPLOTOBJ)
+endif
+
+all: $(GUITARGET) test testgl3
 
 test: $(GUITARGET)
 	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) $(GUITARGET) \
+	$(LIBS)
+
+testgl3: $(GUITARGET)
+	$(CXX) -o test_gl3.out src/main_gl3.cpp $(CXXFLAGS) $(GUITARGET) \
 	$(LIBS)
 
 
@@ -66,14 +79,17 @@ $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
+%.o: %.c
+	$(CC) $(EDCFLAGS) -o $@ -c $<
 	
 .PHONY: clean
 
 clean:
 	$(RM) $(GUITARGET)
 	$(RM) test.out
+	$(RM) test_gl3.out
 
 spotless: clean
 	$(RM) $(BUILDGUI)
-	$(RM) $(BUILDPLOT)
+	$(RM) $(IMPLOTOBJ)
 
