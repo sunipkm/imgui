@@ -66,30 +66,31 @@ endif
 all: $(GUITARGET) test testgl3
 
 test: $(GUITARGET)
-	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) $(GUITARGET) \
+	@$(CXX) -o test.out src/main.cpp $(CXXFLAGS) $(GUITARGET) \
 	$(LIBS)
 
 testgl3: $(GUITARGET)
-	$(CXX) -o test_gl3.out src/main_gl3.cpp $(CXXFLAGS) $(GUITARGET) \
+	@$(CXX) -o test_gl3.out src/main_gl3.cpp $(CXXFLAGS) $(GUITARGET) \
 	$(LIBS)
 
 
 $(GUITARGET): $(BUILDGUI) $(BUILDPLOT)
-	ar -crus $(GUITARGET) $(BUILDGUI) $(BUILDPLOT)
+	@echo "Built library $(GUITARGET) for $(UNAME_S) $(ARCH)"
+	@ar -crus $(GUITARGET) $(BUILDGUI) $(BUILDPLOT)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
+	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 %.o: %.c
-	$(CC) $(EDCFLAGS) -o $@ -c $<
+	@$(CC) $(EDCFLAGS) -o $@ -c $<
 	
 .PHONY: clean
 
 clean:
-	$(RM) $(GUITARGET)
-	$(RM) test.out
-	$(RM) test_gl3.out
+	@$(RM) $(GUITARGET)
+	@$(RM) test.out
+	@$(RM) test_gl3.out
 
 spotless: clean
-	$(RM) $(BUILDGUI)
-	$(RM) $(IMPLOTOBJ)
+	@$(RM) $(BUILDGUI)
+	@$(RM) $(IMPLOTOBJ)
 
