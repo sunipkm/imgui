@@ -47,7 +47,7 @@ test: $(GUILIB) # Build the OpenGL2 test program
 	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) $(GUILIB) \
 	$(LIBS)
 
-testgl3: $(GUITARGET) # Build the OpenGL3 test program
+testgl3: $(GUILIB) # Build the OpenGL3 test program
 	$(CXX) -o test_gl3.out src/main_gl3.cpp $(CXXFLAGS) $(GUILIB) \
 	$(LIBS)
 
@@ -74,5 +74,4 @@ clean:
 spotless: clean
 	make -f Makefile.imgui spotless
 	make -f Makefile.implot spotless
-	$(RM) $(IMPLOTOBJ)
 
