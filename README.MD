@@ -1,5 +1,8 @@
-# Dear ImGui base library with GLFW backend
+# Dear ImGui base library with GLFW backend (Unix) and DirectX backend (Windows NT)
 
+Upgraded to WIP 1.84.
+
+## Unix-like Systems
 To build the library, execute `make -j$(nproc)` in the directory. To enable ImPlot support (adds to compile time significantly),
 pass the option `implot=1` to the `make` command.
 
@@ -14,6 +17,11 @@ To use implot in your program, you need to compile the library with the `implot=
     assuming `brew` linked the GLFW library files to `/usr/local/lib`. Update this path as necessary.
 
     Linux: ``-lGL `pkg-config --static --libs glfw3` ``
+
+## Windows NT Systems
+Install Visual Studio C++ Compiler 2010 (MSVC 1600) or above, and the DirectX June 2010 SDK.
+Open command prompt and load vcvarsall.bat with x86 option to load compiler path settings.
+Execute build_dxYY.bat to compile.
 
 ### WSL OpenGL3 support and issues
 To use OpenGL3 with VcXsrV and WSL, perform the following steps:
