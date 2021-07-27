@@ -4,7 +4,7 @@ call build_imgui.bat
 @set OUT_DIR=Build
 @set OUT_EXE=test_dx12
 @set INCLUDES=/I .\include /I "%WindowsSdkDir%Include\um" /I "%WindowsSdkDir%Include\shared"
-@set SOURCES=src\main.cpp ^
+@set SOURCES=src\main_dx12.cpp ^
 src\imgui_impl_dx11.cpp
 @set LIBS=d3d12.lib d3dcompiler.lib dxgi.lib win32_lib\libimgui_win32.lib
 mkdir %OUT_DIR%
