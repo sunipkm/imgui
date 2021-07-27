@@ -40,7 +40,7 @@ endif
 GUILIB=libimgui_glfw.a # ImGui library with glfw backend
 PLOTLIB=libimplot.a # ImPlot library (backend agnostic)
 
-all: $(GUILIB) $(PLOTLIB) test testgl3
+all: $(GUILIB) test testgl3 # $(PLOTLIB)
 	echo Platform: $(ECHO_MESSAGE)
 
 test: $(GUILIB) # Build the OpenGL2 test program
