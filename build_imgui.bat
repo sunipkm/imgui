@@ -1,7 +1,7 @@
 @REM Build for Visual Studio compiler. Run your copy of vcvars32.bat or vcvarsall.bat to setup command-line compiler.
 @set OUT_DIR=win32_lib
 @set INCLUDES=/I .\ /I .\include\ /I .\include\imgui\ /I .\include\backend\
-@set SOURCES=src\win32\imgui_impl_win32.cpp ^
+@set SOURCES=src\imgui_impl_win32.cpp ^
 src\imgui.cpp ^
 src\imgui_demo.cpp ^
 src\imgui_draw.cpp ^
