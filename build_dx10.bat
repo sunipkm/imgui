@@ -2,7 +2,7 @@
 @set OUT_DIR=Build
 call build_imgui.bat
 @set OUT_EXE=test_dx10
-@set INCLUDES=/I..\.. /I..\..\backends /I "%WindowsSdkDir%Include\um" /I "%WindowsSdkDir%Include\shared" /I "%DXSDK_DIR%Include"
+@set INCLUDES=/I .\include /I "%WindowsSdkDir%Include\um" /I "%WindowsSdkDir%Include\shared" /I "%DXSDK_DIR%Include"
 @set SOURCES=src\main_dx10.cpp ^
 src\imgui_impl_dx10.cpp
 @set LIBS=/LIBPATH:"%DXSDK_DIR%/Lib/x86" d3d10.lib d3dcompiler.lib win32_lib\libimgui_win32.lib
