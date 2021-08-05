@@ -5,6 +5,7 @@
 #include "imgui/imgui.h"
 #include "backend/imgui_impl_win32.h"
 #include "backend/imgui_impl_dx10.h"
+#include <windows.h>
 #include <d3d10_1.h>
 #include <d3d10.h>
 #include <tchar.h>
@@ -22,7 +23,14 @@ void CleanupRenderTarget();
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Main code
+#ifdef DEBUG_CONSOLE
 int main(int, char**)
+#else
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+                     _In_opt_ HINSTANCE hPrevInstance,
+                     _In_ LPWSTR    lpCmdLine,
+                     _In_ int       nCmdShow)
+#endif
 {
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
