@@ -44,7 +44,7 @@ all: $(GUILIB) test testgl3 # $(PLOTLIB)
 	echo Platform: $(ECHO_MESSAGE)
 
 test: $(GUILIB) # Build the OpenGL2 test program
-	$(CXX) -o test.out src/main.cpp $(CXXFLAGS) $(GUILIB) \
+	$(CXX) -o test_gl2.out src/main_gl2.cpp $(CXXFLAGS) $(GUILIB) \
 	$(LIBS)
 
 testgl3: $(GUILIB) # Build the OpenGL3 test program

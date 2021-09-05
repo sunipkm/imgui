@@ -8,6 +8,11 @@
 #include "backend/imgui_impl_opengl3.h"
 #include <stdio.h>
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#define IMGUI_ON_WINDOWS
+#include <windows.h>
+#include <tchar.h>
+#endif
 // About Desktop OpenGL function loaders:
 //  Modern desktop OpenGL doesn't have a standard portable header file to load OpenGL function pointers.
 //  Helper libraries are often used for this purpose! Here we are supporting a few common ones (gl3w, glew, glad).
@@ -42,6 +47,10 @@ using namespace gl;
 // Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
+#pragma comment(lib, "OpenGL32.lib")
+#pragma comment(lib, "User32.lib")
+#pragma comment(lib, "Gdi32.lib")
+#pragma comment(lib, "Shell32.lib")
 #endif
 
 static void glfw_error_callback(int error, const char* description)
@@ -49,7 +58,14 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
+#if !defined(DEBUG_CONSOLE) && defined(IMGUI_ON_WINDOWS)
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+                     _In_opt_ HINSTANCE hPrevInstance,
+                     _In_ LPWSTR    lpCmdLine,
+                     _In_ int       nCmdShow)
+#else
 int main(int, char**)
+#endif
 {
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
