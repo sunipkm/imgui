@@ -1,7 +1,10 @@
 @REM Build for Visual Studio compiler. Run your copy of vcvars32.bat or vcvarsall.bat to setup command-line compiler.
 @set OUT_DIR=win32_lib
-@set INCLUDES=/I .\ /I .\include\ /I .\include\imgui\ /I .\include\implot\ /I .\include\backend\ /I "%WindowsSdkDir%Include\um" /I "%WindowsSdkDir%Include\shared" /I "%DXSDK_DIR%Include"
+@set INCLUDES=/I .\ /I .\include\ /I .\win32_include /I .\include\imgui\ /I .\include\implot\ /I .\include\backend\ /I "%WindowsSdkDir%Include\um" /I "%WindowsSdkDir%Include\shared" /I "%DXSDK_DIR%Include"
 @set SOURCES=src\imgui_impl_win32.cpp ^
+src\imgui_impl_glfw.cpp ^
+src\imgui_impl_opengl2.cpp ^
+src\imgui_impl_opengl3.cpp ^
 src\imgui_impl_dx9.cpp ^
 src\imgui_impl_dx10.cpp ^
 src\imgui_impl_dx11.cpp ^
@@ -14,6 +17,6 @@ src\implot.cpp ^
 src\implot_items.cpp ^
 src\implot_demo.cpp
 mkdir %OUT_DIR%
-cl /nologo /c /EHsc /wd4005 /Zi /MD %INCLUDES% /D UNICODE /D _UNICODE %SOURCES% /Fo%OUT_DIR%/
+cl /nologo /c /EHsc /wd4005 /Zi /MD %INCLUDES% /D UNICODE /D _UNICODE /D GLEW_STATIC /D IMGUI_IMPL_OPENGL_LOADER_GLEW %SOURCES% /Fo%OUT_DIR%/
 @echo Done generating code
 lib /nologo /out:%OUT_DIR%\libimgui_win32.lib %OUT_DIR%/*.obj
