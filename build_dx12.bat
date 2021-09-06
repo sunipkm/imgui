@@ -1,7 +1,7 @@
 @REM Build for Visual Studio compiler. Run your copy of vcvars32.bat or vcvarsall.bat to setup command-line compiler.
 @REM Important: to build on 32-bit systems, the DX12 backends needs '#define ImTextureID ImU64', so we pass it here.
 call build_imgui.bat
-@set OUT_DIR=Build
+@set OUT_DIR=output
 @set OUT_EXE=test_dx12
 @set INCLUDES=/I .\include /I "%WindowsSdkDir%Include\um" /I "%WindowsSdkDir%Include\shared"
 @set SOURCES=src\main_dx12.cpp ^
