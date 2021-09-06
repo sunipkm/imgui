@@ -1,6 +1,6 @@
 @REM Build for Visual Studio compiler. Run your copy of vcvars32.bat or vcvarsall.bat to setup command-line compiler.
 call build_imgui.bat
-@set OUT_DIR=Build
+@set OUT_DIR=output
 @set OUT_EXE=test_gl2
 @set INCLUDES=/I .\include /I .\win32_include
 @set SOURCES=src\main_gl2.cpp

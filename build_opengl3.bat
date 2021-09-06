@@ -3,7 +3,7 @@ call build_imgui.bat
 @echo OFF
 reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=32s|| set OS=64s
 @echo ON
-@set OUT_DIR=Build
+@set OUT_DIR=output
 @set OUT_EXE=test_gl3
 @set INCLUDES=/I .\include /I .\win32_include
 @set SOURCES=src\main_gl3.cpp
