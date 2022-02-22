@@ -19,4 +19,4 @@ src\implot_demo.cpp
 mkdir %OUT_DIR%
 cl /nologo /c /EHsc /wd4005 /Zi /MD %INCLUDES% /D UNICODE /D _UNICODE /D GLEW_STATIC /D IMGUI_IMPL_OPENGL_LOADER_GLEW %SOURCES% /Fo%OUT_DIR%/
 @echo Done generating code
-lib /nologo /out:%OUT_DIR%\libimgui_win32.lib %OUT_DIR%/*.obj
+lib /nologo /out:%OUT_DIR%\libimgui_win%ext%.lib %OUT_DIR%/*.obj
