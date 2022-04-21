@@ -32,8 +32,8 @@ ifeq ($(UNAME_S), Darwin) #APPLE
 	ECHO_MESSAGE = "Mac OS X"
 	LIBEXT= dylib
 	LINKOPTIONS:= -dynamiclib -single_module
-	CXXFLAGS:= -arch $(ARCH) $(CXXFLAGS)
-	LIBS += -arch $(ARCH) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+	CXXFLAGS:= -arch $(ARCH) $(CXXFLAGS)  `pkg-config --cflags glfw3`
+	LIBS += -arch $(ARCH) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo  `pkg-config --libs glfw3`
 	LIBS += -L/usr/local/lib -L/opt/local/lib
 	#LIBS += -lglfw3
 	LIBS += -lglfw
