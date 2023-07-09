@@ -31,9 +31,9 @@ ifeq ($(UNAME_S), Darwin) #APPLE
 	CXXFLAGS:= -arch $(ARCH) $(CXXFLAGS) `pkg-config --cflags glfw3`
 	LIBS += -arch $(ARCH) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo `pkg-config --libs glfw3`
 	LIBS += -L/usr/local/lib -L/opt/local/lib
-	LIBS += -lglfw
+	LIBS += `pkg-config --static --libs glfw3`
 
-	CXXFLAGS += -I/usr/local/include -I/opt/local/include
+	CXXFLAGS += -I/usr/local/include -I/opt/local/include `pkg-config --cflags glfw3`
 	CFLAGS = $(CXXFLAGS)
 endif
 

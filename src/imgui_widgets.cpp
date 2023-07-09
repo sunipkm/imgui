@@ -2366,6 +2366,46 @@ bool ImGui::DragBehavior(ImGuiID id, ImGuiDataType data_type, void* p_v, float v
     return false;
 }
 
+bool ImGui::SelectableInput(const char* str_id, bool selected, ImGuiSelectableFlags flags, char* buf, size_t buf_size)
+{
+    ImGuiContext& g = *GImGui;
+    ImGuiWindow* window = g.CurrentWindow;
+    ImVec2 pos_before = window->DC.CursorPos;
+    ImGuiStyle& style = g.Style;
+    float w = CalcItemWidth();
+
+
+    ImVec2 label_size = CalcTextSize(str_id, NULL, true);
+    ImRect frame_bb(window->DC.CursorPos, window->DC.CursorPos + ImVec2(w, label_size.y + style.FramePadding.y * 2.0f));
+
+    PushID(str_id);
+    PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(g.Style.ItemSpacing.x, g.Style.FramePadding.y * 2.0f));
+    bool ret = Selectable("##Selectable", selected, flags | ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_AllowItemOverlap);
+    PopStyleVar();
+
+    ImGuiID id = window->GetID("##Input");
+    bool temp_input_is_active = TempInputIsActive(id);
+    bool temp_input_start = ret ? IsMouseDoubleClicked(0) : false;
+
+    if (temp_input_start)
+        SetActiveID(id, window);
+
+    if (temp_input_is_active || temp_input_start)
+    {
+        ImVec2 pos_after = window->DC.CursorPos;
+        window->DC.CursorPos = pos_before;
+        ret = TempInputText(frame_bb, id, "##Input", buf, (int)buf_size, ImGuiInputTextFlags_None);
+        window->DC.CursorPos = pos_after;
+    }
+    else
+    {
+        window->DrawList->AddText(pos_before, GetColorU32(ImGuiCol_Text), buf);
+    }
+
+    PopID();
+    return ret;
+}
+
 // Note: p_data, p_min and p_max are _pointers_ to a memory address holding the data. For a Drag widget, p_min and p_max are optional.
 // Read code of e.g. DragFloat(), DragInt() etc. or examples in 'Demo->Widgets->Data Types' to understand how to use this function directly.
 bool ImGui::DragScalar(const char* label, ImGuiDataType data_type, void* p_data, float v_speed, const void* p_min, const void* p_max, const char* format, ImGuiSliderFlags flags)
